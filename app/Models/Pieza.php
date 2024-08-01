@@ -12,6 +12,11 @@ class Pieza extends Model
     protected $fillable = [
         'serial_number',
         'part_status',
+        'lot',
+        'updated_part_status',
+
     ];
+
+
 
 }

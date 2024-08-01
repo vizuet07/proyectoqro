@@ -9,7 +9,7 @@
     <div class="card-content">
         <div class="content has-text-centered">
             <div class="columns is-centered is-multiline is-mobile mt-4">
-                @hasrole('dock')
+                {{--@hasrole('dock')--}}
                 <div class="column is-4-desktop is-6-tablet is-12-mobile">
                     <div class="box">
                         <h1 class="title is-6"><i class="fa-solid fa-address-card"></i> PIEZAS</h1>
@@ -17,8 +17,8 @@
                         <a href="{{route('PiezaVista', Auth::user()->id)}}" class="button is-danger">Acceder</a>
                     </div>
                 </div>
-                @endhasrole
-                @hasrole('sospechoso')
+                {{--@endhasrole--}}
+                {{--@hasrole('sospechoso')--}}
                 <div class="column is-4-desktop is-6-tablet is-12-mobile">
                     <div class="box">
                         <h1 class="title is-6"><i class="fa-solid fa-address-card"></i> PIEZAS</h1>
@@ -26,8 +26,8 @@
                         <a href="{{route('PiezaVista', Auth::user()->id)}}" class="button is-danger">Acceder</a>
                     </div>
                 </div>
-                @endhasrole
-                @hasrole('cuarentena')
+                {{--@endhasrole--}}
+                {{--@hasrole('cuarentena')--}}
                 <div class="column is-4-desktop is-6-tablet is-12-mobile">
                     <div class="box">
                         <h1 class="title is-6"><i class="fa-solid fa-address-card"></i> PIEZAS</h1>
@@ -35,8 +35,8 @@
                         <a href="{{route('PiezaVista', Auth::user()->id)}}" class="button is-danger">Acceder</a>
                     </div>
                 </div>
-                @endhasrole
-                @hasrole('visualizacion')
+                {{--@endhasrole--}}
+                {{--@hasrole('visualizacion')--}}
                 <div class="column is-4-desktop is-6-tablet is-12-mobile">
                     <div class="box">
                         <h1 class="title is-6"><i class="fa-solid fa-address-card"></i> PIEZAS</h1>
@@ -44,7 +44,7 @@
                         <a href="{{route('PiezaVistaVizualizador')}}" class="button is-danger">Acceder</a>
                     </div>
                 </div>
-                @endhasrole
+                {{--@endhasrole--}}
             </div>
         </div>
     </div>
