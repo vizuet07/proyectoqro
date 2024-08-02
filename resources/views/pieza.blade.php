@@ -95,6 +95,8 @@
                 </tbody>
             </table>
 
+            
+
             <div class="pagination">
                 {{ $piezas->links('vendor.pagination.bulma') }}
             </div>

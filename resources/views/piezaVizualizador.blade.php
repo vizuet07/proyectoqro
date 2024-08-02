@@ -15,11 +15,10 @@
                 <form method="GET" action="{{ route('PiezaVistaFecha') }}">
                     <div class="field has-addons">
                         <div class="control">
-                            <input class="input" type="date" name="selected_date">
+                            <input class="input" type="date" name="selected_date" value="{{ request()->input('selected_date') }}">
                         </div>
                         <div class="control">
                             <button type="submit" class="button" style="background-color: rgb(36, 85, 198); color: white;">Filtrar por fecha</button>
-
                         </div>
                     </div>
                 </form>
@@ -57,5 +56,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="pagination">
+            {{ $piezas->links('vendor.pagination.bulma') }}
+        </div>
     </div>
 @endsection

@@ -24,16 +24,19 @@ class PiezaController extends Controller
     }
 
 
-    public function getPiezaVizualizador(){
-        $piezas=Pieza::orderBy('created_at', 'desc')->get();
-        return view('piezaVizualizador',compact('piezas'));
-    }
-    public function filtrarporFecha(Request $request)
-    {
-        $fecha = $request->input('selected_date');
-        $piezas = Pieza::whereDate('created_at', $fecha)->orderBy('created_at', 'desc')->get();
+    public function getPiezaVizualizador() {
+        $piezas = Pieza::orderBy('created_at', 'desc')->paginate(50);
         return view('piezaVizualizador', compact('piezas'));
     }
+
+    public function filtrarporFecha(Request $request) {
+        $fecha = $request->input('selected_date');
+        $piezas = Pieza::whereDate('created_at', $fecha)
+                       ->orderBy('created_at', 'desc')
+                       ->paginate(10000000000000);
+        return view('piezaVizualizador', compact('piezas'));
+    }
+
 
     public function updatePieza (Request $request,$id){
         try{
