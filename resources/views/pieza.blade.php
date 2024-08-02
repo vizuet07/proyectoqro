@@ -77,8 +77,8 @@
                                                 <div class="field">
                                                     <label class="label">Numero Serial</label>
                                                     <div class="control">
-                                                        <input class="input" value="{{ $pieza->serial_number }}"
-                                                            name="UpSerialNumber">
+                                                        <input class="input" value="{{ $pieza->serial_number }}" name="UpSerialNumber" id="UpSerialNumber-{{ $pieza->serial_number }}">
+
                                                     </div>
                                                 </div>
                                                 <div class="has-text-centered">
@@ -116,12 +116,6 @@
                                     <p class="help is-danger">Ingresa el numero serial</p>
                                 @enderror
                             </div>
-                            <div class="field">
-                                <button type="button" id="scanCodeBtn" class="button is-primary">Escanear Código</button>
-                            </div>
-                            <div id="scanner" style="display:none;">
-                                <video id="scannerVideo" width="100%"></video>
-                            </div>
                             <div class="has-text-centered">
                                 <button class="button is-primary" type="submit"
                                     style="background-color: rgb(36, 85, 198); color: white; border-color: #007bff;">
@@ -144,69 +138,5 @@
             document.getElementById('modal-nvo-pieza').classList.add('is-active');
         </script>
     @endif
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-
-    <script>
-        document.getElementById('scanCodeBtn').addEventListener('click', function () {
-            document.getElementById('scanner').style.display = 'block';
-            startScanner();
-        });
-
-        function startScanner() {
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector('#scannerVideo'),
-                    constraints: {
-                        width: 640,
-                        height: 480,
-                        facingMode: "environment"
-                    },
-                },
-                decoder: {
-                    readers: ["code_128_reader", "ean_reader", "ean_8_reader", "code_39_reader",
-                        "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader",
-                        "i2of5_reader"
-                    ]
-                }
-            }, function (err) {
-                if (err) {
-                    console.log(err);
-                    return
-                }
-                console.log("Initialization finished. Ready to start");
-                Quagga.start();
-            });
-
-            Quagga.onDetected(function (result) {
-                if (result.codeResult.code) {
-                    document.getElementById('serialNumber').value = result.codeResult.code;
-                    Quagga.stop();
-                    document.getElementById('scanner').style.display = 'none';
-                }
-            });
-        }
-
-        // Close scanner and modal when clicking outside
-        document.querySelector('.modal-background').addEventListener('click', function () {
-            Quagga.stop();
-            document.getElementById('scanner').style.display = 'none';
-        });
-
-        // Close scanner and modal when clicking on close button
-        document.querySelector('.modal-close').addEventListener('click', function () {
-            Quagga.stop();
-            document.getElementById('scanner').style.display = 'none';
-        });
-
-        // Close scanner and modal when pressing Escape key
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                Quagga.stop();
-                document.getElementById('scanner').style.display = 'none';
-            }
-        });
     </script>
 @endsection
