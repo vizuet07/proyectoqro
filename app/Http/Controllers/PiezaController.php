@@ -15,22 +15,26 @@ class PiezaController extends Controller
     }
     #Metodo para recuperar la informacion de la db, mandar los datos en .json
     #y abrir la vista
-    public function getPieza($id){
-        $piezas = Pieza::where('part_status', $id)->get();
-        $user=User::find($id);
-        return view('pieza',compact('piezas','user'));
+    public function getPieza($id) {
+        $piezas = Pieza::where('part_status', $id)
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(50);
+        $user = User::find($id);
+        return view('pieza', compact('piezas', 'user'));
     }
 
+
     public function getPiezaVizualizador(){
-        $piezas=Pieza::all();
+        $piezas=Pieza::orderBy('created_at', 'desc')->get();
         return view('piezaVizualizador',compact('piezas'));
     }
     public function filtrarporFecha(Request $request)
     {
         $fecha = $request->input('selected_date');
-        $piezas = Pieza::whereDate('created_at', $fecha)->get();
+        $piezas = Pieza::whereDate('created_at', $fecha)->orderBy('created_at', 'desc')->get();
         return view('piezaVizualizador', compact('piezas'));
     }
+
     public function updatePieza (Request $request,$id){
         try{
         $pieza = Pieza::findOrFail($id);

@@ -45,8 +45,12 @@
                             Sospechoso
                         @elseif($pieza->part_status == 3)
                             Cuarentena
+                        @elseif($pieza->part_status == 4)
+                            Finalizado
+                        @elseif($pieza->part_status == 5)
+                            Finalizado2
                         @else
-                            Otro
+                            Error
                         @endif
                     </td>
                 </tr>

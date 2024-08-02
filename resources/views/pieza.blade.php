@@ -95,6 +95,10 @@
                 </tbody>
             </table>
 
+            <div class="pagination">
+                {{ $piezas->links('vendor.pagination.bulma') }}
+            </div>
+
             <!-- Modal crear -->
             <div id="modal-nvo-pieza" class="modal">
                 <div class="modal-background"></div>
