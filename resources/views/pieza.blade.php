@@ -20,6 +20,18 @@
                     </button>
 
                 </div>
+                <div class="column">
+                    <form method="GET" action="{{ route('PiezaVistaFechaEstado',Auth::user()->id) }}">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="date" name="selected_date" value="{{ request()->input('selected_date') }}">
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button" style="background-color: rgb(36, 85, 198); color: white;">Filtrar por fecha</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             @if (session('Correcto'))
                 <div class="notification is-success">
@@ -33,6 +45,7 @@
                     {{ session('Error') }}
                 </div>
             @endif
+
             <table class="table custom-table">
                 <thead>
                     <tr>
@@ -95,7 +108,7 @@
                 </tbody>
             </table>
 
-            
+
 
             <div class="pagination">
                 {{ $piezas->links('vendor.pagination.bulma') }}

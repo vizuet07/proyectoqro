@@ -37,6 +37,14 @@ class PiezaController extends Controller
         return view('piezaVizualizador', compact('piezas'));
     }
 
+    public function filtrarporFechaEstados(Request $request,$id) {
+        $fecha = $request->input('selected_date');
+        $piezas = Pieza::where('part_status', $id)
+                        ->whereDate('created_at', $fecha)
+                       ->orderBy('created_at', 'desc')
+                       ->paginate(10000000000000);
+        return view('piezaVizualizador', compact('piezas'));
+    }
 
     public function updatePieza (Request $request,$id){
         try{

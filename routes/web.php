@@ -16,3 +16,5 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 
     Route::get('/vizualizador/pieza',[PiezaController::class, 'getPiezaVizualizador'])->name('PiezaVistaVizualizador');
     Route::get('/vizualizador/pieza/fecha', [PiezaController::class, 'filtrarporFecha'])->name('PiezaVistaFecha');
+    Route::get('/vizualizador/pieza/fecha/{id}', [PiezaController::class, 'filtrarporFechaEstados'])->name('PiezaVistaFechaEstado');
+
