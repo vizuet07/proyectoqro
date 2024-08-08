@@ -19,6 +19,18 @@
                         <i class="fa-solid fa-plus" style="color: white;"></i> Nueva pieza
                     </button>
                 </div>
+                <div class="column">
+                    <form method="GET" action="{{ route('PiezaVistaFechaEstado',Auth::user()->id) }}">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input class="input" type="date" name="selected_date" value="{{ request()->input('selected_date') }}">
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button" style="background-color: rgb(36, 85, 198); color: white;">Filtrar por fecha</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             @if (session('Correcto'))
                 <div class="notification is-success">
@@ -46,31 +58,37 @@
                             <td>{{ $pieza->serial_number }}</td>
                             <td>{{ $pieza->created_at }}</td>
                             <td>
-                                <div class="actions">
-                                    <button class="button is-info js-modal-trigger" data-target="modal-{{ $pieza->serial_number }}"
-                                        style="background-color: rgb(36, 85, 198); color: white; border-color: aqua;">
-                                        <i class="fa-solid fa-pen-to-square" style="color: white;"></i>
-                                    </button>
+            <div class="actions buttons">
+                <button class="button is-info js-modal-trigger" data-target="modal-{{ $pieza->serial_number }}">
+                    <span class="icon">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <span>Editar</span>
+                </button>
 
-                                    <form method="POST" action="{{ route('print.qr') }}">
-                                        @csrf
-                                        <input type="hidden" name="serial_number" value="{{ $pieza->serial_number }}">
-                                        <button class="button is-info" type="submit"
-                                            style="background-color: rgb(36, 85, 198); color: white; border-color: aqua;">
-                                            <i class="fa-solid fa-print" style="color: white;"></i> Imprimir QR
-                                        </button>
-                                    </form>
+                <form method="POST" action="{{ route('print.qr') }}">
+                    @csrf
+                    <input type="hidden" name="serial_number" value="{{ $pieza->serial_number }}">
+                    <button class="button is-info" type="submit">
+                        <span class="icon">
+                            <i class="fa-solid fa-print"></i>
+                        </span>
+                        <span>Imprimir</span>
+                    </button>
+                </form>
 
-                                    <form action="{{ route('PiezaEliminar', $pieza->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="button is-danger"
-                                            onclick="return confirm('¿Estás seguro de que quieres eliminar esta PIEZA?')"
-                                            style="background-color: #ff3860; color: white; border-color: #ff3860;">
-                                            <i class="fa-solid fa-trash-can" style="color: white;"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                <form action="{{ route('PiezaEliminar', $pieza->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="button is-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta PIEZA?')">
+                        <span class="icon">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </span>
+                        <span>Eliminar</span>
+                    </button>
+                </form>
+            </div>
+
                                 <div id="modal-{{ $pieza->serial_number }}" class="modal">
                                     <div class="modal-background"></div>
                                     <div class="modal-content">
@@ -106,8 +124,9 @@
         <div class="modal-content">
             <div class="box">
                 <p class="title is-5 has-text-centered">Nueva Pieza</p>
-                <form method="POST" action="{{ route('PiezaCrear', $user->id) }}">
+                <form method="POST" action="{{ route('PiezaActualizar', $user->id) }}">
                     @csrf
+                    @method('PATCH')
                     <div class="field">
                         <label class="label">Numero Serial</label>
                         <div class="control">
@@ -115,9 +134,10 @@
                         </div>
                     </div>
                     <div class="has-text-centered">
-                        <button class="button is-primary" type="submit">Agregar</button>
+                        <button class="button is-primary" type="submit">Actualizar</button>
                     </div>
                 </form>
+
             </div>
         </div>
         <button class="modal-close is-large" aria-label="close"></button>
