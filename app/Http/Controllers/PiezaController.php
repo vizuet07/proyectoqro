@@ -16,8 +16,8 @@ class PiezaController extends Controller
     }
 
     public function getPieza($id) {
-        $piezas = Pieza::where('part_status', $id)
-                        ->orderBy('created_at', 'desc')
+        $piezas = Pieza::where('Estatus', $id)
+                        ->orderBy('FechaCreacion', 'desc')
                         ->paginate(50);
         $user = User::find($id);
         return view('pieza', compact('piezas', 'user'));
@@ -25,23 +25,23 @@ class PiezaController extends Controller
 
 
     public function getPiezaVizualizador() {
-        $piezas = Pieza::orderBy('created_at', 'desc')->paginate(50);
+        $piezas = Pieza::orderBy('FechaCreacion', 'desc')->paginate(50);
         return view('piezaVizualizador', compact('piezas'));
     }
 
     public function filtrarporFecha(Request $request) {
         $fecha = $request->input('selected_date');
-        $piezas = Pieza::whereDate('created_at', $fecha)
-                       ->orderBy('created_at', 'desc')
+        $piezas = Pieza::whereDate('FechaCreacion', $fecha)
+                       ->orderBy('FechaCreacion', 'desc')
                        ->paginate(10000000000000);
         return view('piezaVizualizador', compact('piezas'));
     }
 
     public function filtrarporFechaEstados(Request $request,$id) {
         $fecha = $request->input('selected_date');
-        $piezas = Pieza::where('part_status', $id)
-                        ->whereDate('created_at', $fecha)
-                       ->orderBy('created_at', 'desc')
+        $piezas = Pieza::where('Estatus', $id)
+                        ->whereDate('FechaCreacion', $fecha)
+                       ->orderBy('FechaCreacion', 'desc')
                        ->paginate(10000000000000);
         $user = User::find($id);
 
@@ -51,15 +51,15 @@ class PiezaController extends Controller
 
     public function updatePieza(Request $request, $id){
         try{
-            $pieza = Pieza::findOrFail($id);
-            $pieza->serial_number = $request->UpSerialNumber;
+            $pieza = Pieza::where('ID_Pieza', $id)->firstOrFail();
+            $pieza->Modelo = $request->UpSerialNumber;
             $pieza->save();
             return back()->with("Correcto","Pieza modificada correctamente");
         } catch (QueryException $e) {
             if ($e->errorInfo[1] == 1062) {
                 return back()->with("Error", "Error, la pieza ya existe");
             }
-            return back()->with("Error", "Error al modificar la pieza");
+            return back()->with("Error", "Error al modificar la pieza".$e);
         }
     }
 
@@ -70,12 +70,12 @@ class PiezaController extends Controller
                 'txtSerialNumber' => 'required|string',
             ]);
 
-            // Encuentra la pieza por su serial_number
-            $pieza = Pieza::where('serial_number', $request->txtSerialNumber)->first();
+            // Encuentra la pieza por su Modelo
+            $pieza = Pieza::where('Modelo', $request->txtSerialNumber)->first();
 
-            // Si la pieza existe, actualiza el campo part_status
+            // Si la pieza existe, actualiza el campo Estatus
             if ($pieza) {
-                $pieza->part_status = $id;
+                $pieza->Estatus = $id;
                 $pieza->save();
 
                 return back()->with("Correcto", "Estado de la pieza actualizado correctamente");
@@ -102,7 +102,7 @@ class PiezaController extends Controller
 
     public function printQr(Request $request)
     {
-        $serialNumber = $request->input('serial_number');
+        $serialNumber = $request->input('Modelo');
 
         // Generar el código QR
         $qrCode = QrCode::format('png')->size(200)->generate($serialNumber);

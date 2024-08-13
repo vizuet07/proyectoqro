@@ -35,18 +35,18 @@
             <tbody>
                 @foreach ($piezas as $pieza)
                 <tr>
-                    <td>{{ $pieza->serial_number }}</td>
-                    <td>{{ $pieza->created_at }}</td>
+                    <td>{{ $pieza->Modelo }}</td>
+                    <td>{{ $pieza->FechaCreacion }}</td>
                     <td>
-                        @if($pieza->part_status == 1)
+                        @if($pieza->ID_Pieza == 1)
                             Dock
-                        @elseif($pieza->part_status == 2)
+                        @elseif($pieza->ID_Pieza == 2)
                             Sospechoso
-                        @elseif($pieza->part_status == 3)
+                        @elseif($pieza->ID_Pieza == 3)
                             Cuarentena
-                        @elseif($pieza->part_status == 4)
+                        @elseif($pieza->ID_Pieza == 4)
                             Finalizado
-                        @elseif($pieza->part_status == 5)
+                        @elseif($pieza->ID_Pieza == 5)
                             Finalizado2
                         @else
                             Error

@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Pieza extends Model
 {
     use HasFactory;
-    protected $table ='piezas';
-    protected $fillable = [
-        'serial_number',
-        'part_status',
-        'lot',
-        'updated_part_status',
-
-    ];
-
+    // Especifica que la clave primaria
+    protected $primaryKey = 'ID_Pieza';
+    // Desactiva las marcas de tiempo automáticas
+    public $timestamps = false;
 
 
 }

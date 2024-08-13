@@ -55,11 +55,11 @@
                 <tbody>
                     @foreach ($piezas as $pieza)
                         <tr>
-                            <td>{{ $pieza->serial_number }}</td>
-                            <td>{{ $pieza->created_at }}</td>
+                            <td>{{ $pieza->Modelo }}</td>
+                            <td>{{ $pieza->FechaCreacion }}</td>
                             <td>
             <div class="actions buttons">
-                <button class="button is-info js-modal-trigger" data-target="modal-{{ $pieza->serial_number }}">
+                <button class="button is-info js-modal-trigger" data-target="modal-{{ $pieza->Modelo }}">
                     <span class="icon">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
@@ -68,7 +68,7 @@
 
                 <form method="POST" action="{{ route('print.qr') }}">
                     @csrf
-                    <input type="hidden" name="serial_number" value="{{ $pieza->serial_number }}">
+                    <input type="hidden" name="Modelo" value="{{ $pieza->Modelo }}">
                     <button class="button is-info" type="submit">
                         <span class="icon">
                             <i class="fa-solid fa-print"></i>
@@ -76,8 +76,7 @@
                         <span>Imprimir</span>
                     </button>
                 </form>
-
-                <form action="{{ route('PiezaEliminar', $pieza->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('PiezaEliminar', $pieza->ID_Pieza) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="button is-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar esta PIEZA?')">
@@ -89,24 +88,25 @@
                 </form>
             </div>
 
-                                <div id="modal-{{ $pieza->serial_number }}" class="modal">
+                                <div id="modal-{{ $pieza->Modelo }}" class="modal">
                                     <div class="modal-background"></div>
                                     <div class="modal-content">
                                         <div class="box">
                                             <p class="title is-5 has-text-centered">Modificar Pieza</p>
-                                            <form method="POST" action="{{ route('PiezaEditar', $pieza->id) }}">
+                                            <form method="POST" action="{{ route('PiezaEditar', $pieza->ID_Pieza) }}">
                                                 @csrf
                                                 @method('PATCH')
                                                 <div class="field">
                                                     <label class="label">Numero Serial</label>
                                                     <div class="control">
-                                                        <input class="input" value="{{ $pieza->serial_number }}" name="UpSerialNumber" id="UpSerialNumber-{{ $pieza->serial_number }}">
+                                                        <input class="input" value="{{ $pieza->Modelo }}" name="UpSerialNumber" id="UpSerialNumber-{{ $pieza->Modelo }}">
                                                     </div>
                                                 </div>
                                                 <div class="has-text-centered">
                                                     <button class="button is-primary" type="submit">Modificar</button>
                                                 </div>
                                             </form>
+
                                         </div>
                                     </div>
                                     <button class="modal-close is-large" aria-label="close"></button>
