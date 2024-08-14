@@ -16,13 +16,14 @@ class PiezaController extends Controller
     }
 
     public function getPieza($id) {
+        $user = User::find($id);
+        $roles = $user->roles; // Asumiendo que un usuario puede tener múltiples roles
         $piezas = Pieza::where('Estatus', $id)
                         ->orderBy('FechaCreacion', 'desc')
                         ->paginate(50);
         $user = User::find($id);
-        return view('pieza', compact('piezas', 'user'));
+        return view('pieza', compact('piezas', 'roles'));
     }
-
 
     public function getPiezaVizualizador() {
         $piezas = Pieza::orderBy('FechaCreacion', 'desc')->paginate(50);
@@ -43,9 +44,10 @@ class PiezaController extends Controller
                         ->whereDate('FechaCreacion', $fecha)
                        ->orderBy('FechaCreacion', 'desc')
                        ->paginate(10000000000000);
-        $user = User::find($id);
+                       $user = User::find($id);
+                       $roles = $user->roles; // Asumiendo que un usuario puede tener múltiples roles
 
-        return view('pieza', compact('piezas', 'user'));
+        return view('pieza', compact('piezas', 'roles'));
 
     }
 

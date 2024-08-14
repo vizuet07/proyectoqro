@@ -38,15 +38,15 @@
                     <td>{{ $pieza->Modelo }}</td>
                     <td>{{ $pieza->FechaCreacion }}</td>
                     <td>
-                        @if($pieza->ID_Pieza == 1)
+                        @if($pieza->Estatus == 1)
                             Dock
-                        @elseif($pieza->ID_Pieza == 2)
+                        @elseif($pieza->Estatus == 2)
                             Sospechoso
-                        @elseif($pieza->ID_Pieza == 3)
+                        @elseif($pieza->Estatus == 3)
                             Cuarentena
-                        @elseif($pieza->ID_Pieza == 4)
+                        @elseif($pieza->Estatus == 4)
                             Finalizado
-                        @elseif($pieza->ID_Pieza == 5)
+                        @elseif($pieza->Estatus == 5)
                             Finalizado2
                         @else
                             Error

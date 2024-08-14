@@ -4,7 +4,11 @@
     <div class="card mt-5">
         <header class="card-header">
             <p class="card-header-title">
-                Piezas - {{ $user->name }}
+                Piezas -
+                @foreach ($roles as $role)
+                {{ $role->name }}
+                @endforeach
+
             </p>
         </header>
         <div class="card-content">
@@ -13,14 +17,15 @@
                     <a href="{{ route('home') }}" class="button is-danger" style="background-color: #ff3860; color: white; border-color: #ff3860;">
                         <i class="fa-solid fa-arrow-left" style="color: white;"></i> Regresar
                     </a>
-
                     <button class="button is-info js-modal-trigger" data-target="modal-nvo-pieza"
                         style="background-color: rgb(36, 85, 198); color: white; border-color: aqua;">
                         <i class="fa-solid fa-plus" style="color: white;"></i> Nueva pieza
                     </button>
+
+
                 </div>
                 <div class="column">
-                    <form method="GET" action="{{ route('PiezaVistaFechaEstado',Auth::user()->id) }}">
+                    <form method="GET" action="{{ route('PiezaVistaFechaEstado',Auth::user()->roles->first()->id) }}">
                         <div class="field has-addons">
                             <div class="control">
                                 <input class="input" type="date" name="selected_date" value="{{ request()->input('selected_date') }}">
@@ -124,13 +129,13 @@
         <div class="modal-content">
             <div class="box">
                 <p class="title is-5 has-text-centered">Nueva Pieza</p>
-                <form method="POST" action="{{ route('PiezaActualizar', $user->id) }}">
+                <form method="POST" action="{{ route('PiezaActualizar', Auth::user()->roles->first()->id) }}">
                     @csrf
                     @method('PATCH')
                     <div class="field">
                         <label class="label">Numero Serial</label>
                         <div class="control">
-                            <input class="input" type="text" name="txtSerialNumber" id="txtSerialNumber" required>
+                            <input id="serialNumber" class="input" type="text" name="txtSerialNumber" id="txtSerialNumber" required>
                         </div>
                     </div>
                     <div class="has-text-centered">

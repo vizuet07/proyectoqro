@@ -10,14 +10,15 @@
         <div class="content has-text-centered">
             <div class="columns is-centered is-multiline is-mobile mt-4">
                 @hasrole('dock')
+                @endhasrole
+
                 <div class="column is-4-desktop is-6-tablet is-12-mobile">
                     <div class="box">
                         <h1 class="title is-6"><i class="fa-solid fa-address-card"></i> PIEZAS</h1>
                         <p>Ver, crear, editar Piezas</p><br>
-                        <a href="{{route('PiezaVista', Auth::user()->id)}}" class="button is-danger">Acceder</a>
+                        <a href="{{route('PiezaVista', Auth::user()->roles->first()->id)}}" class="button is-danger">Acceder</a>
                     </div>
                 </div>
-                @endhasrole
                 {{--@hasrole('sospechoso')--}}
                 {{--@endhasrole--}}
                 {{--@hasrole('cuarentena')--}}
